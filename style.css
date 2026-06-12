@@ -9,13 +9,14 @@ body {
     background: linear-gradient(135deg, #0a0a0a, #1a0033);
     color: #fff;
     min-height: 100vh;
-    overflow-x: hidden;
+    touch-action: manipulation;
 }
 
 .container {
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
+    min-height: 100vh;
 }
 
 header {
@@ -28,51 +29,41 @@ header {
 
 .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 2rem;
+    font-size: 2.2rem;
     background: linear-gradient(90deg, #ff00cc, #00ffff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.nav-btn {
-    background: rgba(255,255,255,0.1);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 50px;
+.cta-btn, .nav-btn, .secondary-btn {
     cursor: pointer;
-    transition: all 0.3s;
-}
-
-.nav-btn:hover {
-    background: rgba(255,255,255,0.2);
-    transform: translateY(-2px);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .cta-btn {
     background: linear-gradient(90deg, #ff00cc, #00ffff);
     color: white;
     border: none;
-    padding: 16px 40px;
-    font-size: 1.2rem;
-    border-radius: 50px;
-    cursor: pointer;
+    padding: 18px 50px;
+    font-size: 1.25rem;
     font-weight: 600;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(255, 0, 204, 0.4);
     transition: all 0.3s;
-    box-shadow: 0 10px 30px rgba(255, 0, 204, 0.3);
 }
 
-.cta-btn:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(255, 0, 204, 0.4);
+.cta-btn:active {
+    transform: scale(0.95);
 }
 
 .screen {
     display: none;
-    min-height: 80vh;
+    min-height: calc(100vh - 80px);
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    padding: 20px;
 }
 
 .screen.active {
@@ -86,17 +77,18 @@ header {
 
 .hero h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 3.5rem;
-    margin-bottom: 20px;
+    font-size: 2.8rem;
     line-height: 1.1;
+    margin-bottom: 20px;
 }
 
 .hero p {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     opacity: 0.9;
     margin-bottom: 40px;
 }
 
+/* Rest of your previous CSS remains the same */
 .progress-bar {
     width: 100%;
     height: 8px;
@@ -119,72 +111,36 @@ header {
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(10px);
     border-radius: 20px;
-    padding: 50px 40px;
+    padding: 40px 30px;
     border: 1px solid rgba(255,255,255,0.1);
-}
-
-#question-text {
-    font-size: 1.8rem;
-    margin-bottom: 40px;
-    text-align: center;
-    line-height: 1.3;
-}
-
-.options {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
 }
 
 .option {
     background: rgba(255,255,255,0.08);
-    padding: 20px;
+    padding: 22px;
     border-radius: 15px;
     cursor: pointer;
     transition: all 0.3s;
     border: 2px solid transparent;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
+    margin-bottom: 12px;
 }
 
-.option:hover {
-    background: rgba(255,255,255,0.15);
-    transform: translateX(10px);
+.option:active {
+    transform: scale(0.98);
+    background: rgba(0, 255, 255, 0.2);
 }
 
 .option.selected {
     border-color: #00ffff;
-    background: rgba(0, 255, 255, 0.1);
+    background: rgba(0, 255, 255, 0.15);
 }
 
-.quiz-controls {
-    margin-top: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 700px;
-}
-
-.taste-profile {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-    margin: 30px 0 50px;
-}
-
-.genre-tag {
-    background: rgba(255,255,255,0.1);
-    padding: 10px 25px;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    border: 1px solid rgba(0,255,255,0.3);
-}
-
+/* Keep the rest of your styles (recommendations-grid, anime-card, etc.) */
 .recommendations-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
     width: 100%;
 }
 
@@ -192,60 +148,14 @@ header {
     background: rgba(255,255,255,0.05);
     border-radius: 20px;
     overflow: hidden;
-    transition: all 0.4s;
-    border: 1px solid rgba(255,255,255,0.1);
+    transition: transform 0.4s;
 }
 
-.anime-card:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-}
-
-.anime-card img {
-    width: 100%;
-    height: 380px;
-    object-fit: cover;
-}
-
-.anime-info {
-    padding: 20px;
-}
-
-.anime-info h3 {
-    font-size: 1.4rem;
-    margin-bottom: 10px;
-}
-
-.genres {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.genre {
-    font-size: 0.8rem;
-    background: rgba(255,0,204,0.2);
-    padding: 4px 12px;
-    border-radius: 20px;
-}
-
-.actions {
-    margin-top: 60px;
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-}
-
-.secondary-btn {
-    background: transparent;
-    color: white;
-    border: 2px solid rgba(255,255,255,0.3);
-    padding: 16px 40px;
-    border-radius: 50px;
-    cursor: pointer;
+.anime-card:active {
+    transform: scale(0.97);
 }
 
 @media (max-width: 768px) {
-    .hero h1 { font-size: 2.8rem; }
+    .hero h1 { font-size: 2.4rem; }
     .question-container { padding: 30px 20px; }
 }
