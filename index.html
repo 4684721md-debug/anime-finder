@@ -2,27 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AnimeSphere • Discover Your Next Obsession</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <header>
             <div class="logo">AnimeSphere</div>
-            <nav>
-                <button onclick="restartQuiz()" class="nav-btn">New Quiz</button>
-            </nav>
+            <button onclick="restartQuiz()" class="nav-btn">New Quiz</button>
         </header>
 
-        <!-- Intro Screen -->
+        <!-- Intro -->
         <div id="intro-screen" class="screen active">
             <div class="hero">
                 <h1>Find Your Next Favorite Anime</h1>
-                <p>Answer 20 questions about your taste. We'll recommend 10 anime you'll love.</p>
-                <button onclick="startQuiz()" class="cta-btn">Start the Quiz</button>
+                <p>Answer 20 questions about your taste.<br>We'll recommend 10 anime you'll love.</p>
+                <button id="start-btn" class="cta-btn">Start the Quiz</button>
             </div>
         </div>
 
@@ -36,12 +33,12 @@
                 <div id="options" class="options"></div>
             </div>
             <div class="quiz-controls">
-                <button onclick="prevQuestion()" id="prev-btn" class="nav-btn" style="display:none;">Previous</button>
-                <span id="question-counter"></span>
+                <button onclick="prevQuestion()" id="prev-btn" class="nav-btn">Previous</button>
+                <span id="question-counter">1 / 20</span>
             </div>
         </div>
 
-        <!-- Results Screen -->
+        <!-- Results -->
         <div id="results-screen" class="screen">
             <h1>Your Anime Taste Profile</h1>
             <div id="taste-profile" class="taste-profile"></div>
