@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anime Finder</title>
+
+<title>Anime Oracle</title>
 
 <link rel="stylesheet" href="style.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 </head>
 
@@ -19,11 +22,34 @@
 
 <div class="card">
 
-<h1>🎌 Anime Finder</h1>
+<header class="hero">
+
+<h1>🎌 Anime Oracle</h1>
 
 <p class="subtitle">
-Answer 20 questions and discover your next favorite anime.
+Answer 20 unique questions and uncover your anime DNA.
 </p>
+
+<div class="heroStats">
+
+<div class="statBox">
+<span class="statNumber">1000+</span>
+<span class="statLabel">Questions</span>
+</div>
+
+<div class="statBox">
+<span class="statNumber">5000+</span>
+<span class="statLabel">Anime</span>
+</div>
+
+<div class="statBox">
+<span class="statNumber">20+</span>
+<span class="statLabel">Genres</span>
+</div>
+
+</div>
+
+</header>
 
 <div id="progressContainer">
 
@@ -37,7 +63,7 @@ Question 1 / 20
 
 </div>
 
-<div id="quiz">
+<section id="quiz">
 
 <h2 id="question">
 
@@ -49,93 +75,129 @@ Loading...
 
 </div>
 
-</div>
+</section>
 
-<div id="result" class="hidden">
+<section id="result" class="hidden">
 
-<h2>Your Anime Taste</h2>
+<div class="resultHeader">
 
-<div class="tasteCard">
-
-<div class="tasteRow">
-
-<span>⚔️ Action</span>
-
-<div class="meter">
-
-<div id="actionMeter"></div>
-
-</div>
-
-</div>
-
-<div class="tasteRow">
-
-<span>😂 Comedy</span>
-
-<div class="meter">
-
-<div id="comedyMeter"></div>
-
-</div>
-
-</div>
-
-<div class="tasteRow">
-
-<span>❤️ Romance</span>
-
-<div class="meter">
-
-<div id="romanceMeter"></div>
-
-</div>
-
-</div>
-
-<div class="tasteRow">
-
-<span>🧠 Psychological</span>
-
-<div class="meter">
-
-<div id="mindMeter"></div>
-
-</div>
-
-</div>
-
-<div class="tasteRow">
-
-<span>✨ Fantasy</span>
-
-<div class="meter">
-
-<div id="fantasyMeter"></div>
-
-</div>
-
-</div>
-
-</div>
+<h2>Your Anime Profile</h2>
 
 <h3 id="personality">
 
-The Tactical Warrior
+Anime Explorer
 
+</h3>
+
+<p id="profileDescription">
+
+Your anime personality analysis will appear here.
+
+</p>
+
+</div>
+
+<div class="tasteCard">
+
+<h3 class="sectionTitle">
+Your Genre Affinity
+</h3>
+
+<div id="genreMeters">
+
+</div>
+
+</div>
+
+<div class="topGenresCard">
+
+<h3 class="sectionTitle">
+Top Genres
+</h3>
+
+<div id="topGenres">
+
+</div>
+
+</div>
+
+<div class="recommendationSection">
+
+<h3 class="sectionTitle">
+Perfect Matches
 </h3>
 
 <div id="recommendations">
 
 </div>
 
+</div>
+
+<div class="recommendationSection">
+
+<h3 class="sectionTitle">
+Hidden Gems
+</h3>
+
+<div id="hiddenGems">
+
+</div>
+
+</div>
+
+<div class="recommendationSection">
+
+<h3 class="sectionTitle">
+Your Anime Statistics
+</h3>
+
+<div id="statsContainer">
+
+<div class="statCard">
+
+<span id="totalGenres">0</span>
+
+<p>Genres Matched</p>
+
+</div>
+
+<div class="statCard">
+
+<span id="dominantGenre">-</span>
+
+<p>Dominant Genre</p>
+
+</div>
+
+<div class="statCard">
+
+<span id="animeMatches">0</span>
+
+<p>Anime Evaluated</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="buttonGroup">
+
 <button id="restartButton">
 
-Take Quiz Again
+Take Another Quiz
+
+</button>
+
+<button id="shareButton">
+
+Share Results
 
 </button>
 
 </div>
+
+</section>
 
 </div>
 
@@ -144,4 +206,5 @@ Take Quiz Again
 <script src="script.js"></script>
 
 </body>
+
 </html>
