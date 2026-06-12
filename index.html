@@ -1,218 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Taste Analyzer</title>
 
-<title>Anime Oracle</title>
+    <link rel="stylesheet" href="style.css">
 
-<meta name="description"
-content="Discover anime recommendations through a personality quiz and uncover your anime DNA.">
-
-<meta name="theme-color" content="#6c63ff">
-
-<link rel="stylesheet" href="style.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
-
 <body>
 
-<div class="background"></div>
+    <div class="background"></div>
 
-<div class="app">
+    <div class="container">
 
-<div class="card">
+        <header>
+            <h1>Anime Taste Analyzer</h1>
+            <p>
+                Answer 20 questions and discover anime that may become your favorites.
+            </p>
+        </header>
 
-<header class="hero">
+        <!-- START SCREEN -->
 
-<h1>🎌 Anime Oracle</h1>
+        <section id="startScreen" class="card active">
 
-<p class="subtitle">
-Answer a personality quiz and uncover your anime DNA.
-</p>
+            <h2>Ready?</h2>
 
-<div class="heroStats">
+            <p>
+                Our AI-inspired recommendation engine will analyze your preferences from a pool of 100+ questions and recommend 10 anime from a database of hundreds.
+            </p>
 
-<div class="statBox">
-<span class="statNumber">5</span>
-<span class="statLabel">Questions</span>
-</div>
+            <ul class="features">
 
-<div class="statBox">
-<span class="statNumber">6</span>
-<span class="statLabel">Anime</span>
-</div>
+                <li>✔ 20 Random Questions</li>
 
-<div class="statBox">
-<span class="statNumber">8+</span>
-<span class="statLabel">Genres</span>
-</div>
+                <li>✔ Different Experience Every Time</li>
 
-</div>
+                <li>✔ Genre-Based Analysis</li>
 
-</header>
+                <li>✔ Personalized Recommendations</li>
 
-<div id="progressContainer">
+                <li>✔ Modern Anime UI</li>
 
-<div id="progressBar"></div>
+            </ul>
 
-</div>
+            <button id="startBtn" class="primary-btn">
+                Start Quiz
+            </button>
 
-<div id="progressText">
+        </section>
 
-Question 1 / 5
+        <!-- QUIZ -->
 
-</div>
+        <section id="quizScreen" class="card hidden">
 
-<section id="quiz">
+            <div class="progress-container">
 
-<h2 id="question">
+                <div class="progress-info">
 
-Loading...
+                    <span id="questionCounter">
+                        Question 1 / 20
+                    </span>
 
-</h2>
+                    <span id="progressPercent">
+                        5%
+                    </span>
 
-<div id="answers">
+                </div>
 
-</div>
+                <div class="progress-bar">
 
-</section>
+                    <div id="progressFill"></div>
 
-<section id="result" class="hidden">
+                </div>
 
-<div class="resultHeader">
+            </div>
 
-<h2>Your Anime Profile</h2>
+            <div class="question-area">
 
-<h3 id="personality">
+                <h2 id="questionText">
+                    Loading Question...
+                </h2>
 
-Anime Explorer
+            </div>
 
-</h3>
+            <div id="answersContainer" class="answers">
 
-<p id="profileDescription">
+            </div>
 
-Your anime personality analysis will appear here.
+        </section>
 
-</p>
+        <!-- RESULTS -->
 
-</div>
+        <section id="resultsScreen" class="card hidden">
 
-<div class="tasteCard">
+            <h2>Your Anime Recommendations</h2>
 
-<h3 class="sectionTitle">
-Your Genre Affinity
-</h3>
+            <div class="top-genres">
 
-<div id="genreMeters">
+                <h3>Your Dominant Genres</h3>
 
-</div>
+                <div id="genreTags">
 
-</div>
+                </div>
 
-<div class="topGenresCard">
+            </div>
 
-<h3 class="sectionTitle">
-Top Genres
-</h3>
+            <div id="recommendations" class="recommendations">
 
-<div id="topGenres">
+            </div>
 
-</div>
+            <button id="restartBtn" class="secondary-btn">
+                Retake Quiz
+            </button>
 
-</div>
+        </section>
 
-<div class="recommendationSection">
+    </div>
 
-<h3 class="sectionTitle">
-Perfect Matches
-</h3>
-
-<div id="recommendations">
-
-</div>
-
-</div>
-
-<div class="recommendationSection">
-
-<h3 class="sectionTitle">
-Hidden Gems
-</h3>
-
-<div id="hiddenGems">
-
-</div>
-
-</div>
-
-<div class="recommendationSection">
-
-<h3 class="sectionTitle">
-Your Anime Statistics
-</h3>
-
-<div id="statsContainer">
-
-<div class="statCard">
-
-<span id="totalGenres">0</span>
-
-<p>Genres Matched</p>
-
-</div>
-
-<div class="statCard">
-
-<span id="dominantGenre">-</span>
-
-<p>Dominant Genre</p>
-
-</div>
-
-<div class="statCard">
-
-<span id="animeMatches">6</span>
-
-<p>Anime Evaluated</p>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="buttonGroup">
-
-<button id="restartButton" type="button">
-
-Take Another Quiz
-
-</button>
-
-<button id="shareButton" type="button">
-
-Share Results
-
-</button>
-
-</div>
-
-</section>
-
-</div>
-
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
-
 </html>
