@@ -1,243 +1,254 @@
-const questions = [
+// ===============================
+// ANIME ORACLE V2 - PART 1
+// CORE SETTINGS + DATA
+// ===============================
+
+const QUESTIONS_PER_QUIZ = 30;
+
+const GENRES = [
+"action",
+"adventure",
+"fantasy",
+"romance",
+"comedy",
+"drama",
+"mystery",
+"psychological",
+"thriller",
+"horror",
+"sciFi",
+"supernatural",
+"historical",
+"military",
+"sports",
+"music",
+"sliceOfLife",
+"mecha",
+"isekai",
+"school",
+"crime",
+"survival",
+"magic",
+"strategy",
+"adultCast"
+];
+
+let taste = {};
+
+GENRES.forEach(function(genre){
+taste[genre] = 0;
+});
+
+const personalities = {
+
+action:{
+name:"⚔️ Tactical Emperor",
+description:"You love powerful conflicts and epic battles."
+},
+
+fantasy:{
+name:"🧙 Fantasy Sage",
+description:"Magic and impossible worlds fascinate you."
+},
+
+romance:{
+name:"❤️ Eternal Romantic",
+description:"You value emotional connections."
+},
+
+comedy:{
+name:"😂 Chaos Goblin",
+description:"You enjoy fun and unpredictable adventures."
+},
+
+psychological:{
+name:"🧠 Dark Strategist",
+description:"Mind games and intelligence attract you."
+},
+
+mystery:{
+name:"🕵️ Mystery Hunter",
+description:"You love discovering hidden truths."
+},
+
+military:{
+name:"🏰 Kingdom Builder",
+description:"Leadership and strategy fascinate you."
+},
+
+survival:{
+name:"🔥 Iron Survivor",
+description:"You admire resilience and determination."
+},
+
+sciFi:{
+name:"🚀 Cosmic Explorer",
+description:"Technology and the future excite you."
+},
+
+sliceOfLife:{
+name:"☕ Peaceful Wanderer",
+description:"Simple moments are often the most meaningful."
+}
+
+};
+
+const questionPool = [
 
 {
-question:"What kind of anime do you enjoy most?",
+question:"A mysterious door appears in front of you. What do you do?",
 answers:[
-{text:"Intense Action",score:{action:3}},
-{text:"Funny Comedy",score:{comedy:3}},
-{text:"Romance",score:{romance:3}},
-{text:"Mind Games",score:{mind:3}}
+{
+text:"Kick it open",
+score:{action:3}
+},
+{
+text:"Investigate carefully",
+score:{mystery:3}
+},
+{
+text:"Study ancient books first",
+score:{magic:2,fantasy:2}
+},
+{
+text:"Bring friends with you",
+score:{comedy:2,sliceOfLife:2}
+}
 ]
 },
 
 {
-question:"Which protagonist do you like?",
+question:"Which ending do you prefer?",
 answers:[
-{text:"Overpowered Hero",score:{action:2}},
-{text:"Smart Genius",score:{mind:2}},
-{text:"Cute & Funny",score:{comedy:2}},
-{text:"Kind Romantic",score:{romance:2}}
+{
+text:"A shocking twist",
+score:{psychological:3,thriller:2}
+},
+{
+text:"A happy romance",
+score:{romance:3}
+},
+{
+text:"The hero wins",
+score:{action:3}
+},
+{
+text:"An emotional farewell",
+score:{drama:3}
+}
 ]
 },
 
 {
-question:"Pick a setting",
+question:"Which world would you visit?",
 answers:[
-{text:"Fantasy World",score:{fantasy:3}},
-{text:"Modern City",score:{comedy:1}},
-{text:"War Zone",score:{action:2}},
-{text:"High School",score:{romance:2}}
+{
+text:"A magical kingdom",
+score:{fantasy:3,magic:2}
+},
+{
+text:"A cyberpunk city",
+score:{sciFi:3}
+},
+{
+text:"A war-torn empire",
+score:{military:3,strategy:2}
+},
+{
+text:"A peaceful countryside",
+score:{sliceOfLife:3}
+}
 ]
 },
 
 {
-question:"Choose a weapon",
+question:"What is your greatest strength?",
 answers:[
-{text:"Sword",score:{action:2,fantasy:1}},
-{text:"Magic",score:{fantasy:3}},
-{text:"Brain",score:{mind:3}},
-{text:"Love Letter",score:{romance:3}}
+{
+text:"Courage",
+score:{action:3}
+},
+{
+text:"Intelligence",
+score:{psychological:2,strategy:2}
+},
+{
+text:"Kindness",
+score:{romance:2,drama:2}
+},
+{
+text:"Creativity",
+score:{music:2,fantasy:2}
+}
 ]
 },
 
 {
-question:"Favorite ending?",
+question:"Which protagonist sounds most interesting?",
 answers:[
-{text:"Epic Victory",score:{action:2}},
-{text:"Everyone Laughs",score:{comedy:2}},
-{text:"Couple Together",score:{romance:2}},
-{text:"Plot Twist",score:{mind:2}}
-]
-},
-
 {
-question:"Pick a color",
-answers:[
-{text:"Red",score:{action:2}},
-{text:"Purple",score:{mind:2}},
-{text:"Pink",score:{romance:2}},
-{text:"Yellow",score:{comedy:2}}
-]
+text:"A genius criminal",
+score:{crime:3,psychological:2}
 },
-
 {
-question:"Weekend plan?",
-answers:[
-{text:"Fight Monsters",score:{action:2}},
-{text:"Watch Memes",score:{comedy:2}},
-{text:"Date",score:{romance:2}},
-{text:"Solve Mysteries",score:{mind:2}}
-]
+text:"A dragon slayer",
+score:{fantasy:3,action:2}
 },
-
 {
-question:"Best anime power?",
-answers:[
-{text:"Super Strength",score:{action:2}},
-{text:"Time Travel",score:{mind:2}},
-{text:"Magic",score:{fantasy:2}},
-{text:"Charm",score:{romance:2}}
-]
+text:"A struggling musician",
+score:{music:3,drama:2}
 },
-
 {
-question:"Choose a pet",
-answers:[
-{text:"Dragon",score:{fantasy:3}},
-{text:"Dog",score:{action:1}},
-{text:"Cat",score:{comedy:1}},
-{text:"Fox",score:{mind:2}}
-]
-},
-
-{
-question:"Favorite weather?",
-answers:[
-{text:"Storm",score:{action:2}},
-{text:"Sunny",score:{comedy:2}},
-{text:"Rain",score:{romance:2}},
-{text:"Fog",score:{mind:2}}
-]
-},
-
-{
-question:"Choose a food",
-answers:[
-{text:"Steak",score:{action:2}},
-{text:"Cake",score:{comedy:2}},
-{text:"Coffee",score:{mind:2}},
-{text:"Chocolate",score:{romance:2}}
-]
-},
-
-{
-question:"Favorite pace?",
-answers:[
-{text:"Fast",score:{action:2}},
-{text:"Slow Story",score:{mind:2}},
-{text:"Relaxed",score:{comedy:2}},
-{text:"Emotional",score:{romance:2}}
-]
-},
-
-{
-question:"Choose a companion",
-answers:[
-{text:"Warrior",score:{action:2}},
-{text:"Wizard",score:{fantasy:2}},
-{text:"Detective",score:{mind:2}},
-{text:"Best Friend",score:{comedy:2}}
-]
-},
-
-{
-question:"Pick a movie genre",
-answers:[
-{text:"Action",score:{action:2}},
-{text:"Fantasy",score:{fantasy:2}},
-{text:"Comedy",score:{comedy:2}},
-{text:"Romance",score:{romance:2}}
-]
-},
-
-{
-question:"Your personality?",
-answers:[
-{text:"Fearless",score:{action:2}},
-{text:"Funny",score:{comedy:2}},
-{text:"Calm",score:{mind:2}},
-{text:"Caring",score:{romance:2}}
-]
-},
-
-{
-question:"Choose a season",
-answers:[
-{text:"Summer",score:{action:2}},
-{text:"Spring",score:{romance:2}},
-{text:"Winter",score:{mind:2}},
-{text:"Autumn",score:{fantasy:2}}
-]
-},
-
-{
-question:"Pick an animal",
-answers:[
-{text:"Tiger",score:{action:2}},
-{text:"Owl",score:{mind:2}},
-{text:"Rabbit",score:{romance:2}},
-{text:"Monkey",score:{comedy:2}}
-]
-},
-
-{
-question:"Choose a hobby",
-answers:[
-{text:"Training",score:{action:2}},
-{text:"Reading",score:{mind:2}},
-{text:"Gaming",score:{comedy:2}},
-{text:"Drawing",score:{romance:2}}
-]
-},
-
-{
-question:"Ideal journey?",
-answers:[
-{text:"Adventure",score:{fantasy:2}},
-{text:"Battle",score:{action:2}},
-{text:"Mystery",score:{mind:2}},
-{text:"Love Story",score:{romance:2}}
-]
-},
-
-{
-question:"Final choice",
-answers:[
-{text:"Become King",score:{action:3}},
-{text:"Save Everyone",score:{fantasy:3}},
-{text:"Outsmart Everyone",score:{mind:3}},
-{text:"Find True Love",score:{romance:3}}
+text:"A sports underdog",
+score:{sports:3}
+}
 ]
 }
 
 ];
 
-let currentQuestion=0;
+let selectedQuestions = [];
 
-let taste={
-action:0,
-comedy:0,
-romance:0,
-mind:0,
-fantasy:0
-};
+let currentQuestion = 0;
 
-const question=document.getElementById("question");
-const answers=document.getElementById("answers");
-const result=document.getElementById("result");
-const quiz=document.getElementById("quiz");
-const progress=document.getElementById("progressBar");
-const progressText=document.getElementById("progressText");
-function showQuestion() {
+// ===============================
+// QUIZ BUILDER
+// ===============================
 
-const q = questions[currentQuestion];
+function buildQuiz(){
+
+selectedQuestions =
+[...questionPool]
+.sort(()=>Math.random()-0.5)
+.slice(0,Math.min(QUESTIONS_PER_QUIZ,questionPool.length));
+
+}
+
+// ===============================
+// SHOW QUESTION
+// ===============================
+
+function showQuestion(){
+
+const q = selectedQuestions[currentQuestion];
 
 question.innerText = q.question;
 
 answers.innerHTML = "";
 
 progress.style.width =
-((currentQuestion + 1) / questions.length) * 100 + "%";
+((currentQuestion + 1) / selectedQuestions.length) * 100 + "%";
 
 progressText.innerText =
 "Question " +
 (currentQuestion + 1) +
 " / " +
-questions.length;
+selectedQuestions.length;
 
 q.answers.forEach(function(answer){
 
-const button = document.createElement("button");
+const button =
+document.createElement("button");
 
 button.className = "option";
 
@@ -247,13 +258,19 @@ button.onclick = function(){
 
 for(let key in answer.score){
 
+if(taste[key] === undefined){
+
+taste[key] = 0;
+
+}
+
 taste[key] += answer.score[key];
 
 }
 
 currentQuestion++;
 
-if(currentQuestion < questions.length){
+if(currentQuestion < selectedQuestions.length){
 
 showQuestion();
 
@@ -271,55 +288,131 @@ answers.appendChild(button);
 
 }
 
+// ===============================
+// PERSONALITY ENGINE
+// ===============================
+
+function getTopGenres(limit = 5){
+
+return Object.entries(taste)
+.sort((a,b)=>b[1]-a[1])
+.slice(0,limit);
+
+}
+
 function personalityName(){
 
-const max = Math.max(
+const topGenre =
+getTopGenres(1)[0]?.[0];
 
-taste.action,
+if(
+topGenre &&
+personalities[topGenre]
+){
 
-taste.comedy,
-
-taste.romance,
-
-taste.mind,
-
-taste.fantasy
-
-);
-
-if(max===taste.action){
-
-return "⚔️ Tactical Warrior";
+return personalities[topGenre].name;
 
 }
 
-if(max===taste.mind){
-
-return "🧠 Master Strategist";
+return "🎌 Anime Explorer";
 
 }
 
-if(max===taste.romance){
+function personalityDescription(){
 
-return "❤️ Hopeless Romantic";
+const topGenre =
+getTopGenres(1)[0]?.[0];
 
-}
+if(
+topGenre &&
+personalities[topGenre]
+){
 
-if(max===taste.comedy){
-
-return "😂 Chaos Enjoyer";
-
-}
-
-return "✨ Fantasy Dreamer";
+return personalities[topGenre].description;
 
 }
 
-function setMeter(id,value){
-
-document.getElementById(id).style.width=(value*10)+"%";
+return "Your anime taste is still being explored.";
 
 }
+// ===============================
+// TOP GENRES DISPLAY
+// ===============================
+
+function renderTopGenres(){
+
+const container =
+document.getElementById("topGenres");
+
+if(!container) return;
+
+container.innerHTML = "";
+
+getTopGenres(5).forEach(function(entry){
+
+const genre = entry[0];
+
+const score = entry[1];
+
+const badge =
+document.createElement("div");
+
+badge.className = "genreBadge";
+
+badge.innerText =
+genre +
+" • " +
+score;
+
+container.appendChild(badge);
+
+});
+
+}
+// ===============================
+// GENRE METERS
+// ===============================
+
+function renderGenreMeters(){
+
+const container =
+document.getElementById("genreMeters");
+
+if(!container) return;
+
+container.innerHTML = "";
+
+getTopGenres(10).forEach(function(entry){
+
+const genre = entry[0];
+
+const score = entry[1];
+
+const row =
+document.createElement("div");
+
+row.className = "tasteRow";
+
+row.innerHTML = `
+
+<span>${genre}</span>
+
+<div class="meter">
+
+<div style="width:${Math.min(score*5,100)}%"></div>
+
+</div>
+
+`;
+
+container.appendChild(row);
+
+});
+
+}
+// ===============================
+// RESULT SCREEN
+// ===============================
 
 function showResult(){
 
@@ -327,135 +420,264 @@ quiz.classList.add("hidden");
 
 result.classList.remove("hidden");
 
-setMeter("actionMeter",taste.action);
-
-setMeter("comedyMeter",taste.comedy);
-
-setMeter("romanceMeter",taste.romance);
-
-setMeter("mindMeter",taste.mind);
-
-setMeter("fantasyMeter",taste.fantasy);
-
-document.getElementById("personality").innerText =
+document.getElementById("personality")
+.innerText =
 personalityName();
+
+const profile =
+document.getElementById(
+"profileDescription"
+);
+
+if(profile){
+
+profile.innerText =
+personalityDescription();
+
+}
+
+renderTopGenres();
+
+renderGenreMeters();
+
+updateStats();
 
 recommendAnime();
 
 }
+// ===============================
+// STATS
+// ===============================
+
+function updateStats(){
+
+const topGenre =
+getTopGenres(1)[0];
+
+const totalGenres =
+Object.values(taste)
+.filter(score=>score>0)
+.length;
+
+const totalGenresEl =
+document.getElementById(
+"totalGenres"
+);
+
+const dominantGenreEl =
+document.getElementById(
+"dominantGenre"
+);
+
+const animeMatchesEl =
+document.getElementById(
+"animeMatches"
+);
+
+if(totalGenresEl){
+
+totalGenresEl.innerText =
+totalGenres;
+
+}
+
+if(dominantGenreEl){
+
+dominantGenreEl.innerText =
+topGenre
+? topGenre[0]
+: "-";
+
+}
+
+if(animeMatchesEl){
+
+animeMatchesEl.innerText =
+animeDatabase.length;
+
+}
+
+}
+// ===============================
+// SHARE BUTTON
+// ===============================
+
+const shareButton =
+document.getElementById(
+"shareButton"
+);
+
+if(shareButton){
+
+shareButton.onclick =
+function(){
+
+const text =
+`I got "${personalityName()}" on Anime Oracle!`;
+
+if(
+navigator.share
+){
+
+navigator.share({
+
+title:"Anime Oracle",
+
+text:text
+
+});
+
+}else{
+
+navigator.clipboard
+.writeText(text);
+
+alert(
+"Result copied to clipboard!"
+);
+
+}
+
+};
+
+}
+// ===============================
+// ANIME DATABASE V2
+// ===============================
+
 const animeDatabase = [
 
 {
-title:"Attack on Titan",
-description:"Dark action with incredible plot twists.",
-tags:["action","mind"]
+title:"Monster",
+description:"A brilliant psychological thriller about morality and evil.",
+year:2004,
+hiddenGem:false,
+tags:[
+"psychological",
+"mystery",
+"crime",
+"adultCast",
+"thriller"
+]
 },
 
 {
-title:"Code Geass",
-description:"Strategic battles and genius planning.",
-tags:["mind","action"]
+title:"Mushishi",
+description:"A peaceful supernatural journey through strange phenomena.",
+year:2005,
+hiddenGem:true,
+tags:[
+"supernatural",
+"fantasy",
+"sliceOfLife"
+]
 },
 
 {
 title:"Vinland Saga",
-description:"Epic fights with emotional storytelling.",
-tags:["action"]
-},
-
-{
-title:"Death Note",
-description:"Psychological cat-and-mouse thriller.",
-tags:["mind"]
+description:"A brutal story of revenge, war and growth.",
+year:2019,
+hiddenGem:false,
+tags:[
+"action",
+"historical",
+"military",
+"drama"
+]
 },
 
 {
 title:"Steins;Gate",
-description:"Time travel and brilliant mysteries.",
-tags:["mind"]
+description:"Time travel and consequences.",
+year:2011,
+hiddenGem:false,
+tags:[
+"sciFi",
+"psychological",
+"mystery",
+"thriller"
+]
 },
 
 {
 title:"Kaguya-sama: Love is War",
-description:"Comedy mixed with romance and mind games.",
-tags:["romance","comedy","mind"]
+description:"Romance becomes a strategic battlefield.",
+year:2019,
+hiddenGem:false,
+tags:[
+"romance",
+"comedy",
+"school",
+"strategy"
+]
 },
 
 {
-title:"Your Name",
-description:"Beautiful romance with fantasy elements.",
-tags:["romance","fantasy"]
-},
-
-{
-title:"Spy x Family",
-description:"Funny family adventure packed with action.",
-tags:["comedy","action"]
-},
-
-{
-title:"Konosuba",
-description:"Fantasy adventure with hilarious characters.",
-tags:["fantasy","comedy"]
-},
-
-{
-title:"Frieren",
-description:"Peaceful fantasy journey with emotional depth.",
-tags:["fantasy"]
+title:"Kingdom",
+description:"Military campaigns and kingdom building.",
+year:2012,
+hiddenGem:true,
+tags:[
+"military",
+"historical",
+"strategy",
+"action"
+]
 }
 
 ];
+// ===============================
+// ANIME SCORING
+// ===============================
 
-function recommendAnime(){
+function getAnimeScore(anime){
 
-const container=document.getElementById("recommendations");
-
-container.innerHTML="";
-
-let ranked=[];
-
-animeDatabase.forEach(function(anime){
-
-let score=0;
+let score = 0;
 
 anime.tags.forEach(function(tag){
 
-score+=taste[tag]||0;
+score += taste[tag] || 0;
 
 });
 
-ranked.push({
+return score;
 
-title:anime.title,
+}
+// ===============================
+// HIDDEN GEMS
+// ===============================
 
-description:anime.description,
+function showHiddenGems(ranked){
 
-score:score
+const container =
+document.getElementById(
+"hiddenGems"
+);
 
-});
+if(!container) return;
 
-});
+container.innerHTML = "";
 
-ranked.sort(function(a,b){
+ranked
+.filter(anime=>anime.hiddenGem)
+.slice(0,5)
+.forEach(function(anime){
 
-return b.score-a.score;
+const card =
+document.createElement("div");
 
-});
+card.className =
+"animeCard";
 
-ranked.slice(0,5).forEach(function(anime){
-
-const card=document.createElement("div");
-
-card.className="animeCard";
-
-card.innerHTML=`
+card.innerHTML = `
 
 <h3>${anime.title}</h3>
 
 <p>${anime.description}</p>
 
-<p><strong>Match Score: ${anime.score}</strong></p>
+<div class="matchBadge">
+💎 Hidden Gem
+</div>
 
 `;
 
@@ -464,31 +686,111 @@ container.appendChild(card);
 });
 
 }
+// ===============================
+// RECOMMENDATION ENGINE
+// ===============================
 
-document.getElementById("restartButton").onclick=function(){
+function recommendAnime(){
 
-currentQuestion=0;
+const container =
+document.getElementById(
+"recommendations"
+);
 
-taste={
+if(!container) return;
 
-action:0,
+container.innerHTML = "";
 
-comedy:0,
+let ranked =
+animeDatabase.map(function(anime){
 
-romance:0,
+return {
 
-mind:0,
+...anime,
 
-fantasy:0
+score:getAnimeScore(anime)
 
 };
 
-result.classList.add("hidden");
+});
 
-quiz.classList.remove("hidden");
+ranked.sort(function(a,b){
+
+return b.score - a.score;
+
+});
+
+ranked
+.slice(0,10)
+.forEach(function(anime){
+
+const maxScore =
+Math.max(
+1,
+getTopGenres(1)[0]?.[1] || 1
+);
+
+const percent =
+Math.min(
+100,
+Math.round(
+(anime.score/maxScore)*20
+)
+);
+
+const card =
+document.createElement("div");
+
+card.className =
+"animeCard";
+
+card.innerHTML = `
+
+<h3>${anime.title}</h3>
+
+<p>${anime.description}</p>
+
+<div class="matchBadge">
+${percent}% Match
+</div>
+
+`;
+
+container.appendChild(card);
+
+});
+
+showHiddenGems(ranked);
+
+}
+document
+.getElementById(
+"restartButton"
+)
+.onclick = function(){
+
+currentQuestion = 0;
+
+taste = {};
+
+GENRES.forEach(function(genre){
+
+taste[genre] = 0;
+
+});
+
+buildQuiz();
+
+result.classList.add(
+"hidden"
+);
+
+quiz.classList.remove(
+"hidden"
+);
 
 showQuestion();
 
 };
-
+buildQuiz();
 showQuestion();
