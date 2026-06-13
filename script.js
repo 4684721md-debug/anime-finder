@@ -44,33 +44,223 @@ const progressText = document.getElementById("progressText");
 ========================= */
 
 const questionPool = [
-  {
-    question: "What excites you most in anime?",
-    answers: [
-      { text: "Epic battles", score: { action: 3 } },
-      { text: "Deep story twists", score: { mind: 3 } },
-      { text: "Romantic feelings", score: { romance: 3 } },
-      { text: "Funny chaos", score: { comedy: 3 } }
-    ]
-  },
-  {
-    question: "Pick your vibe",
-    answers: [
-      { text: "Dark and serious", score: { dark: 3, thriller: 2 } },
-      { text: "Bright and happy", score: { wholesome: 3 } },
-      { text: "Emotional journey", score: { emotional: 3, drama: 2 } },
-      { text: "Mysterious world", score: { mystery: 3 } }
-    ]
-  },
-  {
-    question: "Your ideal story type?",
-    answers: [
-      { text: "War and survival", score: { action: 3, dark: 2 } },
-      { text: "Love and life", score: { romance: 3, sliceOfLife: 2 } },
-      { text: "Magic adventure", score: { fantasy: 3 } },
-      { text: "Future tech world", score: { sciFi: 3 } }
-    ]
-  }
+
+/* =========================
+   CORE TASTE
+========================= */
+
+{
+  question: "What excites you most in anime?",
+  answers: [
+    { text: "Epic battles", score: { action: 3 } },
+    { text: "Deep story twists", score: { mind: 3 } },
+    { text: "Romantic feelings", score: { romance: 3 } },
+    { text: "Funny chaos", score: { comedy: 3 } }
+  ]
+},
+{
+  question: "Pick your vibe",
+  answers: [
+    { text: "Dark and serious", score: { dark: 3, thriller: 2 } },
+    { text: "Bright and happy", score: { wholesome: 3 } },
+    { text: "Emotional journey", score: { emotional: 3, drama: 2 } },
+    { text: "Mysterious world", score: { mystery: 3 } }
+  ]
+},
+{
+  question: "Your ideal story type?",
+  answers: [
+    { text: "War and survival", score: { action: 3, dark: 2 } },
+    { text: "Love and life", score: { romance: 3, sliceOfLife: 2 } },
+    { text: "Magic adventure", score: { fantasy: 3 } },
+    { text: "Future tech world", score: { sciFi: 3 } }
+  ]
+},
+
+/* =========================
+   CHARACTER PREFERENCES
+========================= */
+
+{
+  question: "What type of main character do you like?",
+  answers: [
+    { text: "Overpowered hero", score: { action: 2 } },
+    { text: "Genius strategist", score: { mind: 3 } },
+    { text: "Emotionally deep character", score: { emotional: 3 } },
+    { text: "Funny idiot hero", score: { comedy: 3 } }
+  ]
+},
+{
+  question: "Pick a personality trait in characters",
+  answers: [
+    { text: "Cold and calculating", score: { mind: 2, dark: 2 } },
+    { text: "Kind and loving", score: { romance: 3, wholesome: 2 } },
+    { text: "Fearless and strong", score: { action: 3 } },
+    { text: "Weird and chaotic", score: { comedy: 3 } }
+  ]
+},
+
+/* =========================
+   WORLD BUILDING
+========================= */
+
+{
+  question: "Where would you rather live?",
+  answers: [
+    { text: "Fantasy kingdom", score: { fantasy: 3 } },
+    { text: "Modern city", score: { sliceOfLife: 2 } },
+    { text: "Post-apocalyptic world", score: { dark: 3, action: 2 } },
+    { text: "Space universe", score: { sciFi: 3 } }
+  ]
+},
+{
+  question: "Choose a setting",
+  answers: [
+    { text: "School life", score: { sliceOfLife: 2, comedy: 2 } },
+    { text: "War zone", score: { action: 3 } },
+    { text: "Mystery city", score: { mystery: 3 } },
+    { text: "Magical world", score: { fantasy: 3 } }
+  ]
+},
+
+/* =========================
+   STORY STYLE
+========================= */
+
+{
+  question: "What pacing do you prefer?",
+  answers: [
+    { text: "Fast action-packed", score: { action: 3 } },
+    { text: "Slow emotional build", score: { emotional: 3 } },
+    { text: "Mind-heavy story", score: { mind: 3 } },
+    { text: "Light comedy flow", score: { comedy: 3 } }
+  ]
+},
+{
+  question: "Choose story focus",
+  answers: [
+    { text: "Plot twists", score: { mind: 3, thriller: 2 } },
+    { text: "Character emotions", score: { emotional: 3 } },
+    { text: "World building", score: { fantasy: 3 } },
+    { text: "Romance development", score: { romance: 3 } }
+  ]
+},
+
+/* =========================
+   EMOTIONAL STYLE
+========================= */
+
+{
+  question: "What kind of ending do you prefer?",
+  answers: [
+    { text: "Happy ending", score: { wholesome: 3 } },
+    { text: "Sad emotional ending", score: { emotional: 3 } },
+    { text: "Twist ending", score: { mind: 3, thriller: 2 } },
+    { text: "Open ending", score: { mystery: 3 } }
+  ]
+},
+{
+  question: "What hits you the most?",
+  answers: [
+    { text: "Character death", score: { dark: 3, emotional: 2 } },
+    { text: "Love story", score: { romance: 3 } },
+    { text: "Battle scenes", score: { action: 3 } },
+    { text: "Comedy moments", score: { comedy: 3 } }
+  ]
+},
+
+/* =========================
+   EXTRA TASTE DEPTH
+========================= */
+
+{
+  question: "Pick your power",
+  answers: [
+    { text: "Super strength", score: { action: 3 } },
+    { text: "Time control", score: { mind: 3, sciFi: 2 } },
+    { text: "Magic powers", score: { fantasy: 3 } },
+    { text: "Charisma", score: { romance: 3 } }
+  ]
+},
+{
+  question: "Pick a companion",
+  answers: [
+    { text: "Loyal friend", score: { wholesome: 3 } },
+    { text: "Rival genius", score: { mind: 3 } },
+    { text: "Cute partner", score: { romance: 3 } },
+    { text: "Funny sidekick", score: { comedy: 3 } }
+  ]
+},
+
+/* =========================
+   MORE STORY ENERGY
+========================= */
+
+{
+  question: "What keeps you watching?",
+  answers: [
+    { text: "Cliffhangers", score: { thriller: 3 } },
+    { text: "Emotional moments", score: { emotional: 3 } },
+    { text: "Fight scenes", score: { action: 3 } },
+    { text: "Cute scenes", score: { wholesome: 3 } }
+  ]
+},
+{
+  question: "Choose danger level",
+  answers: [
+    { text: "Very high danger", score: { dark: 3, action: 2 } },
+    { text: "Moderate adventure", score: { adventure: 3 } },
+    { text: "Safe and cozy", score: { wholesome: 3 } },
+    { text: "Mind danger only", score: { mind: 3 } }
+  ]
+},
+
+/* =========================
+   FINAL STYLE QUESTIONS
+========================= */
+
+{
+  question: "Pick your dream anime genre",
+  answers: [
+    { text: "Action fantasy", score: { action: 2, fantasy: 2 } },
+    { text: "Romantic drama", score: { romance: 3, drama: 2 } },
+    { text: "Psychological thriller", score: { mind: 3, thriller: 2 } },
+    { text: "Comedy slice of life", score: { comedy: 3, sliceOfLife: 2 } }
+  ]
+},
+{
+  question: "What energy do you prefer?",
+  answers: [
+    { text: "Intense and serious", score: { dark: 3 } },
+    { text: "Relaxed and funny", score: { comedy: 3 } },
+    { text: "Emotional and deep", score: { emotional: 3 } },
+    { text: "Magical and fantasy", score: { fantasy: 3 } }
+  ]
+},
+
+/* =========================
+   BONUS QUESTIONS (VARIETY)
+========================= */
+
+{
+  question: "Pick a fear you enjoy watching",
+  answers: [
+    { text: "Losing loved ones", score: { emotional: 3 } },
+    { text: "Mind games", score: { mind: 3 } },
+    { text: "Monsters", score: { horror: 3 } },
+    { text: "Nothing scary", score: { wholesome: 3 } }
+  ]
+},
+{
+  question: "What anime style do you like?",
+  answers: [
+    { text: "Old school classics", score: { nostalgia: 1 } },
+    { text: "Modern animation", score: { action: 2 } },
+    { text: "Dark artistic style", score: { dark: 3 } },
+    { text: "Cute anime style", score: { wholesome: 3 } }
+  ]
+}
+
 ];
 
 /* =========================
