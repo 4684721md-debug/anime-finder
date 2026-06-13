@@ -5,12 +5,21 @@
 let currentQuestion = 0;
 
 let taste = {
-  intensity: 0,
-  emotion: 0,
-  mind: 0,
+  action: 0,
+  romance: 0,
+  emotional: 0,
   comedy: 0,
   fantasy: 0,
-  realism: 0
+  mind: 0,
+  thriller: 0,
+  mystery: 0,
+  psychological: 0,
+  sciFi: 0,
+  dark: 0,
+  wholesome: 0,
+  sliceOfLife: 0,
+  horror: 0,
+  adventure: 0
 };
 /* =========================
    DOM
@@ -483,11 +492,11 @@ function showQuestion() {
 function personalityName() {
   let t = taste;
 
-  if (t.intensity > 10) return "⚔️ Battle Junkie";
-  if (t.mind > 10) return "🧠 Deep Thinker";
-  if (t.emotion > 10) return "💔 Emotional Soul";
-  if (t.comedy > 10) return "😂 Chaos Lover";
-  if (t.fantasy > 10) return "✨ Dream Explorer";
+  if ((t.action || 0) > 10) return "⚔️ Battle Junkie";
+  if ((t.mind || 0) > 10) return "🧠 Deep Thinker";
+  if ((t.emotional || 0) > 10) return "💔 Emotional Soul";
+  if ((t.comedy || 0) > 10) return "😂 Chaos Lover";
+  if ((t.fantasy || 0) > 10) return "✨ Dream Explorer";
 
   return "🌌 Balanced Watcher";
 }
@@ -556,14 +565,14 @@ function buildQueries(t) {
 function calculateScore(anime, t) {
   let score = 0;
 
-  const genres = (anime.genres || []).map(g => g.name.toLowerCase());
-  const rating = anime.score || 0;
+  const genres = (anime.genres || []).map(g => g.toLowerCase());
+  const rating = anime.averageScore || 0;
 
-  if (genres.includes("action")) score += t.intensity * 2;
-  if (genres.includes("romance")) score += t.emotion * 2;
-  if (genres.includes("psychological")) score += t.mind * 2;
-  if (genres.includes("comedy")) score += t.comedy * 2;
-  if (genres.includes("fantasy")) score += t.fantasy * 2;
+  if (genres.includes("action")) score += (t.action || 0) * 2;
+  if (genres.includes("romance")) score += (t.romance || 0) * 2;
+  if (genres.includes("psychological")) score += (t.mind || 0) * 2;
+  if (genres.includes("comedy")) score += (t.comedy || 0) * 2;
+  if (genres.includes("fantasy")) score += (t.fantasy || 0) * 2;
 
   score += rating / 10;
 
@@ -575,7 +584,7 @@ function calculateScore(anime, t) {
 ========================= */
 
 function explain(anime, t) {
-  let g = (anime.genres || []).map(x => x.name.toLowerCase());
+  let g = (anime.genres || []).map(x => x.toLowerCase());
   let reasons = [];
 
   if (g.includes("action") && t.action > 3) reasons.push("action match");
@@ -594,8 +603,7 @@ async function recommendAnime() {
   const container = document.getElementById("recommendations");
   container.innerHTML = "Finding anime for your taste...";
 
-  const queries = ["action", "romance", "psychological", "fantasy", "comedy"];
-
+ const queries = buildQueries(taste);
   let all = [];
 
   for (let q of queries) {
@@ -603,12 +611,19 @@ async function recommendAnime() {
     all.push(...result);
   }
 
-  const ranked = all.map(a => ({
-    title: a.title.romaji,
-    image: a.coverImage.large,
-    description: a.description?.slice(0, 120) || "",
-    score: calculateScore(a, taste)
-  }));
+  const unique = [...new Map(
+  all.map(a => [a.title.romaji, a])
+).values()];
+
+const ranked = unique.map(a => ({
+  title: a.title.romaji,
+  image: a.coverImage.large,
+  description: (a.description || "")
+    .replace(/<[^>]*>/g, "")
+    .slice(0, 120),
+  score: calculateScore(a, taste),
+  why: explain(a, taste)
+}));
 
   ranked.sort((a, b) => b.score - a.score);
 
