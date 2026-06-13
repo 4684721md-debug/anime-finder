@@ -538,8 +538,13 @@ async function fetchAnime(query) {
     })
   });
 
-  const data = await res.json();
-  return data.data.Page.media;
+const data = await res.json();
+
+if (!data?.data?.Page?.media) {
+  return [];
+}
+
+return data.data.Page.media;
 }
 /* =========================
    QUERY BUILDER
@@ -556,7 +561,7 @@ function buildQueries(t) {
   if (t.horror > 5) q.push("horror");
   if (t.mystery > 5) q.push("mystery");
 
-  return q.length ? q : ["top anime"];
+  return q.length ? q : ["popular"];
 }
 
 /* =========================
