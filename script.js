@@ -582,9 +582,13 @@ function calculateScore(anime, t) {
 
   if (genres.includes("action")) score += (t.action || 0) * 2;
   if (genres.includes("romance")) score += (t.romance || 0) * 2;
-  if (genres.includes("psychological")) score += (t.mind || 0) * 2;
+ if (genres.includes("psychological"))
+  score += ((t.mind || 0) + (t.psychological || 0)) * 2;
   if (genres.includes("comedy")) score += (t.comedy || 0) * 2;
   if (genres.includes("fantasy")) score += (t.fantasy || 0) * 2;
+  if (genres.includes("sci-fi")) score += (t.sciFi || 0) * 2;
+  if (genres.includes("horror")) score += (t.horror || 0) * 2;
+  if (genres.includes("mystery")) score += (t.mystery || 0) * 2;
 
   score += rating / 10;
 
