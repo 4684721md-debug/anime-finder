@@ -9,29 +9,75 @@ let currentQuestion = 0;
 ========================= */
 
 let taste = {
-  action: 0,
-  comedy: 0,
-  romance: 0,
-  mind: 0,
-  fantasy: 0,
-  adventure: 0,
-  sciFi: 0,
-  horror: 0,
-  drama: 0,
-  emotional: 0,
-  sliceOfLife: 0,
-  dark: 0,
-  wholesome: 0,
-  psychological: 0,
-  mystery: 0,
-  thriller: 0,
-  sports: 0,
-  mecha: 0,
-  isekai: 0,
-  historical: 0,
-  music: 0,
-  supernatural: 0,
-  nostalgia: 0
+  Action: 0,
+comedy: 0,
+romance: 0,
+mind: 0,
+fantasy: 0,
+adventure: 0,
+sciFi: 0,
+horror: 0,
+drama: 0,
+emotional: 0,
+sliceOfLife: 0,
+dark: 0,
+wholesome: 0,
+psychological: 0,
+mystery: 0,
+thriller: 0,
+sports: 0,
+mecha: 0,
+isekai: 0,
+historical: 0,
+music: 0,
+supernatural: 0,
+nostalgia: 0,
+suspense: 0,
+satire: 0,
+parody: 0,
+tragedy: 0,
+melodrama: 0,
+noir: 0,
+surrealism: 0,
+experimental: 0,
+existential: 0,
+philosophical: 0,
+cynical: 0,
+optimistic: 0,
+dystopian: 0,
+postApocalyptic: 0,
+cyberpunk: 0,
+steampunk: 0,
+spaceOpera: 0,
+urbanFantasy: 0,
+highFantasy: 0,
+mythological: 0,
+alternativeHistory: 0,
+contemporary: 0,
+rural: 0,
+academic: 0,
+comingOfAge: 0,
+foundFamily: 0,
+slowBurn: 0,
+ensembleCast: 0,
+revenge: 0,
+heist: 0,
+survival: 0,
+political: 0,
+biographical: 0,
+workplace: 0,
+travelogue: 0,
+martialArts: 0,
+cybernetic: 0,
+superhero: 0,
+vampire: 0,
+zombie: 0,
+detective: 0,
+courtroom: 0,
+medical: 0,
+culinary: 0,
+gaming: 0,
+military: 0
 };
 
 /* =========================
@@ -50,33 +96,49 @@ const progressText = document.getElementById("progressText");
 ========================= */
 
 const questionPool = [
+
+/* ================= CORE TASTE ================= */
+
 {
   question: "What excites you most in anime?",
   answers: [
     { text: "Epic battles", score: { action: 3 } },
-    { text: "Deep story twists", score: { mind: 3 } },
+    { text: "Deep story twists", score: { mind: 3, thriller: 1 } },
     { text: "Romantic feelings", score: { romance: 3 } },
     { text: "Funny chaos", score: { comedy: 3 } }
   ]
 },
+
 {
   question: "Pick your vibe",
   answers: [
-    { text: "Dark and serious", score: { dark: 3, thriller: 2 } },
+    { text: "Dark and serious", score: { dark: 3, thriller: 1 } },
     { text: "Bright and happy", score: { wholesome: 3 } },
     { text: "Emotional journey", score: { emotional: 3 } },
     { text: "Mysterious world", score: { mystery: 3 } }
   ]
 },
+
+{
+  question: "What pacing do you prefer?",
+  answers: [
+    { text: "Fast and intense", score: { action: 3 } },
+    { text: "Slow emotional build", score: { emotional: 3 } },
+    { text: "Mind-game focused", score: { mind: 3 } },
+    { text: "Relaxed comedy flow", score: { comedy: 3 } }
+  ]
+},
+
 {
   question: "Your ideal world?",
   answers: [
     { text: "Fantasy kingdom", score: { fantasy: 3 } },
-    { text: "Future sci-fi city", score: { sciFi: 3 } },
-    { text: "Realistic school life", score: { sliceOfLife: 3 } },
-    { text: "War zone survival", score: { action: 3, dark: 2 } }
+    { text: "Sci-fi future city", score: { sciFi: 3 } },
+    { text: "School life", score: { sliceOfLife: 3 } },
+    { text: "Survival war zone", score: { action: 3, dark: 1 } }
   ]
 },
+
 {
   question: "Favorite MC type?",
   answers: [
@@ -86,8 +148,9 @@ const questionPool = [
     { text: "Funny idiot", score: { comedy: 3 } }
   ]
 },
+
 {
-  question: "Choose power",
+  question: "Choose a power",
   answers: [
     { text: "Time control", score: { mind: 3, sciFi: 2 } },
     { text: "Magic", score: { fantasy: 3 } },
@@ -95,35 +158,29 @@ const questionPool = [
     { text: "Mind reading", score: { psychological: 3 } }
   ]
 },
+
 {
-  question: "Pick setting",
+  question: "Pick your setting",
   answers: [
-    { text: "School", score: { sliceOfLife: 3 } },
-    { text: "Space", score: { sciFi: 3 } },
+    { text: "High school", score: { sliceOfLife: 3 } },
+    { text: "Space exploration", score: { sciFi: 3 } },
     { text: "Medieval world", score: { fantasy: 3 } },
     { text: "Modern city", score: { sliceOfLife: 2 } }
   ]
 },
-{
-  question: "What pacing?",
-  answers: [
-    { text: "Fast action", score: { action: 3 } },
-    { text: "Slow emotional", score: { emotional: 3 } },
-    { text: "Mind-heavy", score: { mind: 3 } },
-    { text: "Comedy flow", score: { comedy: 3 } }
-  ]
-},
+
 {
   question: "What hits you hardest?",
   answers: [
-    { text: "Character death", score: { emotional: 3, dark: 2 } },
-    { text: "Love story", score: { romance: 3 } },
+    { text: "Character death", score: { emotional: 3, dark: 1 } },
+    { text: "Love breakup", score: { romance: 3 } },
     { text: "Plot twist", score: { thriller: 3 } },
     { text: "Funny moments", score: { comedy: 3 } }
   ]
 },
+
 {
-  question: "Pick companion",
+  question: "Pick your companion",
   answers: [
     { text: "Loyal friend", score: { wholesome: 3 } },
     { text: "Rival genius", score: { mind: 3 } },
@@ -131,24 +188,29 @@ const questionPool = [
     { text: "Chaos sidekick", score: { comedy: 3 } }
   ]
 },
+
 {
   question: "Danger level?",
   answers: [
-    { text: "Very high", score: { dark: 3, action: 2 } },
-    { text: "Moderate", score: { adventure: 3 } },
+    { text: "Extreme danger", score: { dark: 3, action: 2 } },
+    { text: "Moderate adventure", score: { adventure: 3 } },
     { text: "Safe cozy", score: { wholesome: 3 } },
-    { text: "Mental danger only", score: { psychological: 3 } }
+    { text: "Psychological danger", score: { psychological: 3 } }
   ]
 },
+
+/* ================= STORY & EMOTION ================= */
+
 {
   question: "What keeps you watching?",
   answers: [
     { text: "Cliffhangers", score: { thriller: 3 } },
-    { text: "Emotions", score: { emotional: 3 } },
-    { text: "Fights", score: { action: 3 } },
+    { text: "Strong emotions", score: { emotional: 3 } },
+    { text: "Non-stop fights", score: { action: 3 } },
     { text: "Cute scenes", score: { wholesome: 3 } }
   ]
 },
+
 {
   question: "Favorite theme?",
   answers: [
@@ -158,35 +220,274 @@ const questionPool = [
     { text: "Survival", score: { thriller: 3 } }
   ]
 },
+
 {
-  question: "Pick fear",
+  question: "Biggest fear in story?",
   answers: [
     { text: "Losing loved ones", score: { emotional: 3 } },
     { text: "Mind control", score: { psychological: 3 } },
     { text: "Monsters", score: { horror: 3 } },
-    { text: "Nothing", score: { wholesome: 3 } }
+    { text: "Nothing scares me", score: { wholesome: 3 } }
   ]
 },
+
+{
+  question: "Preferred ending?",
+  answers: [
+    { text: "Happy ending", score: { wholesome: 3 } },
+    { text: "Bittersweet ending", score: { emotional: 3 } },
+    { text: "Dark ending", score: { dark: 3 } },
+    { text: "Open ending", score: { mystery: 3 } }
+  ]
+},
+
+{
+  question: "What motivates characters?",
+  answers: [
+    { text: "Love", score: { romance: 3 } },
+    { text: "Revenge", score: { dark: 3 } },
+    { text: "Power", score: { action: 3 } },
+    { text: "Survival", score: { thriller: 3 } }
+  ]
+},
+
+{
+  question: "What emotional tone do you prefer?",
+  answers: [
+    { text: "Very emotional", score: { emotional: 3 } },
+    { text: "Balanced", score: { sliceOfLife: 2 } },
+    { text: "Light emotions", score: { comedy: 2 } },
+    { text: "No emotion, pure action", score: { action: 3 } }
+  ]
+},
+
+{
+  question: "Which story complexity?",
+  answers: [
+    { text: "Simple", score: { wholesome: 2 } },
+    { text: "Medium", score: { sliceOfLife: 2 } },
+    { text: "Complex mind games", score: { mind: 3 } },
+    { text: "Dark complex plot", score: { thriller: 3, dark: 2 } }
+  ]
+},
+
+/* ================= STYLE & ACTION ================= */
+
+{
+  question: "Fight style?",
+  answers: [
+    { text: "Strategic fights", score: { mind: 3 } },
+    { text: "Explosive power fights", score: { action: 3 } },
+    { text: "Fast martial arts", score: { action: 2 } },
+    { text: "No fighting", score: { wholesome: 3 } }
+  ]
+},
+
 {
   question: "Animation style?",
   answers: [
     { text: "Old school", score: { nostalgia: 3 } },
     { text: "Modern clean", score: { action: 2 } },
-    { text: "Dark art", score: { dark: 3 } },
-    { text: "Cute style", score: { wholesome: 3 } }
+    { text: "Dark artistic", score: { dark: 3 } },
+    { text: "Cute chibi", score: { wholesome: 3 } }
   ]
 },
+
 {
-  question: "Dream anime genre?",
+  question: "How much action?",
   answers: [
-    { text: "Action fantasy", score: { action: 2, fantasy: 2 } },
-    { text: "Romance drama", score: { romance: 3, drama: 2 } },
-    { text: "Psychological thriller", score: { mind: 3, thriller: 2 } },
-    { text: "Comedy slice", score: { comedy: 3, sliceOfLife: 2 } }
+    { text: "Non-stop action", score: { action: 3 } },
+    { text: "Balanced", score: { sliceOfLife: 2 } },
+    { text: "Low action", score: { emotional: 2 } },
+    { text: "No action", score: { wholesome: 3 } }
+  ]
+},
+
+/* ================= CHARACTER & WORLD ================= */
+
+{
+  question: "Team type you like?",
+  answers: [
+    { text: "Strong friendship group", score: { wholesome: 3 } },
+    { text: "Rival groups", score: { mind: 2 } },
+    { text: "Solo hero", score: { action: 3 } },
+    { text: "Chaotic group", score: { comedy: 3 } }
+  ]
+},
+
+{
+  question: "Villain type?",
+  answers: [
+    { text: "Pure evil", score: { dark: 3 } },
+    { text: "Tragic villain", score: { emotional: 3 } },
+    { text: "Smart villain", score: { mind: 3 } },
+    { text: "Funny villain", score: { comedy: 2 } }
+  ]
+},
+
+{
+  question: "What matters most?",
+  answers: [
+    { text: "Story", score: { mind: 2 } },
+    { text: "Characters", score: { emotional: 2 } },
+    { text: "Action", score: { action: 2 } },
+    { text: "Feel-good vibe", score: { wholesome: 3 } }
+  ]
+},
+
+/* ================= EXTRA 20 QUESTIONS ================= */
+
+{
+  question: "Do you like romance subplots?",
+  answers: [
+    { text: "Yes main focus", score: { romance: 3 } },
+    { text: "Yes but small", score: { romance: 2 } },
+    { text: "Not really", score: { action: 2 } },
+    { text: "No romance at all", score: { dark: 1 } }
+  ]
+},
+
+{
+  question: "Preferred anime length?",
+  answers: [
+    { text: "Short (12 eps)", score: { sliceOfLife: 2 } },
+    { text: "Medium (24 eps)", score: { action: 2 } },
+    { text: "Long running", score: { action: 3 } },
+    { text: "Movies only", score: { emotional: 2 } }
+  ]
+},
+
+{
+  question: "Do you like plot twists?",
+  answers: [
+    { text: "Many twists", score: { thriller: 3 } },
+    { text: "Some twists", score: { mind: 2 } },
+    { text: "Few twists", score: { sliceOfLife: 2 } },
+    { text: "No twists", score: { wholesome: 3 } }
+  ]
+},
+
+{
+  question: "Favorite genre energy?",
+  answers: [
+    { text: "Dark intensity", score: { dark: 3 } },
+    { text: "Light happiness", score: { wholesome: 3 } },
+    { text: "High tension", score: { thriller: 3 } },
+    { text: "Balanced mix", score: { sliceOfLife: 2 } }
+  ]
+},
+
+{
+  question: "What do you prefer in fights?",
+  answers: [
+    { text: "Strategy", score: { mind: 3 } },
+    { text: "Power", score: { action: 3 } },
+    { text: "Emotion-driven", score: { emotional: 3 } },
+    { text: "No fights", score: { wholesome: 2 } }
+  ]
+},
+
+{
+  question: "Do you like sad anime?",
+  answers: [
+    { text: "Yes I love it", score: { emotional: 3 } },
+    { text: "Sometimes", score: { emotional: 2 } },
+    { text: "Rarely", score: { sliceOfLife: 2 } },
+    { text: "No sadness", score: { wholesome: 3 } }
+  ]
+},
+
+{
+  question: "How important is art style?",
+  answers: [
+    { text: "Very important", score: { nostalgia: 2 } },
+    { text: "Somewhat", score: { sliceOfLife: 2 } },
+    { text: "Not important", score: { action: 2 } },
+    { text: "Only story matters", score: { mind: 3 } }
+  ]
+},
+
+{
+  question: "Do you prefer smart MC or strong MC?",
+  answers: [
+    { text: "Smart MC", score: { mind: 3 } },
+    { text: "Strong MC", score: { action: 3 } },
+    { text: "Both", score: { action: 2, mind: 2 } },
+    { text: "Neither", score: { sliceOfLife: 2 } }
+  ]
+},
+
+{
+  question: "What world feels best?",
+  answers: [
+    { text: "Fantasy world", score: { fantasy: 3 } },
+    { text: "Sci-fi world", score: { sciFi: 3 } },
+    { text: "Real world", score: { sliceOfLife: 3 } },
+    { text: "Dark world", score: { dark: 3 } }
+  ]
+},
+
+{
+  question: "What type of tension do you like?",
+  answers: [
+    { text: "Physical fights", score: { action: 3 } },
+    { text: "Psychological tension", score: { psychological: 3 } },
+    { text: "Emotional tension", score: { emotional: 3 } },
+    { text: "No tension", score: { wholesome: 3 } }
+  ]
+},
+
+{
+  question: "Do you like mystery?",
+  answers: [
+    { text: "Heavy mystery", score: { mystery: 3 } },
+    { text: "Some mystery", score: { thriller: 2 } },
+    { text: "Light mystery", score: { sliceOfLife: 2 } },
+    { text: "No mystery", score: { wholesome: 3 } }
+  ]
+},
+
+{
+  question: "Do you prefer heroes or anti-heroes?",
+  answers: [
+    { text: "Heroes", score: { wholesome: 2 } },
+    { text: "Anti-heroes", score: { dark: 3 } },
+    { text: "Both", score: { emotional: 2 } },
+    { text: "Villains", score: { psychological: 3 } }
+  ]
+},
+
+{
+  question: "Do you like slow builds?",
+  answers: [
+    { text: "Yes", score: { emotional: 3 } },
+    { text: "Sometimes", score: { sliceOfLife: 2 } },
+    { text: "No", score: { action: 3 } },
+    { text: "Only fast pacing", score: { thriller: 2 } }
+  ]
+},
+
+{
+  question: "Which tone do you prefer?",
+  answers: [
+    { text: "Dark", score: { dark: 3 } },
+    { text: "Bright", score: { wholesome: 3 } },
+    { text: "Neutral", score: { sliceOfLife: 2 } },
+    { text: "Chaotic", score: { comedy: 3 } }
+  ]
+},
+
+{
+  question: "What makes a good anime for you?",
+  answers: [
+    { text: "Story", score: { mind: 2 } },
+    { text: "Emotions", score: { emotional: 2 } },
+    { text: "Action", score: { action: 2 } },
+    { text: "Comedy", score: { comedy: 2 } }
   ]
 }
-];
 
+];
 /* =========================
    GENERATE 20 UNIQUE QUESTIONS
 ========================= */
