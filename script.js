@@ -492,17 +492,7 @@ function personalityName() {
   return "🌌 Balanced Watcher";
 }
 
-  const map = {
-    action: "⚔️ Battle Seeker",
-    mind: "🧠 Genius Thinker",
-    romance: "❤️ Emotional Lover",
-    comedy: "😂 Chaos Enjoyer",
-    fantasy: "✨ Fantasy Dreamer",
-    psychological: "🧩 Deep Analyst"
-  };
-
-  return map[top] || "🌌 Deep Observer";
-}
+ 
 
 /* =========================
    API (FIXED + RETRY + CACHE)
