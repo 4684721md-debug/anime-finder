@@ -5,7 +5,7 @@
 let currentQuestion = 0;
 
 /* =========================
-   PRO TASTE SYSTEM (WEIGHTED AI STYLE)
+   EXTENDED TASTE SYSTEM (22+ GENRES)
 ========================= */
 
 let taste = {
@@ -24,31 +24,32 @@ let taste = {
   wholesome: 0,
   psychological: 0,
   mystery: 0,
-  thriller: 0
+  thriller: 0,
+  sports: 0,
+  mecha: 0,
+  isekai: 0,
+  historical: 0,
+  music: 0,
+  supernatural: 0,
+  nostalgia: 0
 };
 
 /* =========================
    DOM
 ========================= */
 
-const question = document.getElementById("question");
-const answers = document.getElementById("answers");
-const result = document.getElementById("result");
-const quiz = document.getElementById("quiz");
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+const resultEl = document.getElementById("result");
+const quizEl = document.getElementById("quiz");
 const progress = document.getElementById("progressBar");
 const progressText = document.getElementById("progressText");
 
 /* =========================
-   500 QUESTION POOL (SHORT SAMPLE + EXPANDABLE)
-   You can keep adding questions easily
+   40 QUESTION POOL
 ========================= */
 
 const questionPool = [
-
-/* =========================
-   CORE TASTE
-========================= */
-
 {
   question: "What excites you most in anime?",
   answers: [
@@ -63,217 +64,142 @@ const questionPool = [
   answers: [
     { text: "Dark and serious", score: { dark: 3, thriller: 2 } },
     { text: "Bright and happy", score: { wholesome: 3 } },
-    { text: "Emotional journey", score: { emotional: 3, drama: 2 } },
+    { text: "Emotional journey", score: { emotional: 3 } },
     { text: "Mysterious world", score: { mystery: 3 } }
   ]
 },
 {
-  question: "Your ideal story type?",
-  answers: [
-    { text: "War and survival", score: { action: 3, dark: 2 } },
-    { text: "Love and life", score: { romance: 3, sliceOfLife: 2 } },
-    { text: "Magic adventure", score: { fantasy: 3 } },
-    { text: "Future tech world", score: { sciFi: 3 } }
-  ]
-},
-
-/* =========================
-   CHARACTER PREFERENCES
-========================= */
-
-{
-  question: "What type of main character do you like?",
-  answers: [
-    { text: "Overpowered hero", score: { action: 2 } },
-    { text: "Genius strategist", score: { mind: 3 } },
-    { text: "Emotionally deep character", score: { emotional: 3 } },
-    { text: "Funny idiot hero", score: { comedy: 3 } }
-  ]
-},
-{
-  question: "Pick a personality trait in characters",
-  answers: [
-    { text: "Cold and calculating", score: { mind: 2, dark: 2 } },
-    { text: "Kind and loving", score: { romance: 3, wholesome: 2 } },
-    { text: "Fearless and strong", score: { action: 3 } },
-    { text: "Weird and chaotic", score: { comedy: 3 } }
-  ]
-},
-
-/* =========================
-   WORLD BUILDING
-========================= */
-
-{
-  question: "Where would you rather live?",
+  question: "Your ideal world?",
   answers: [
     { text: "Fantasy kingdom", score: { fantasy: 3 } },
-    { text: "Modern city", score: { sliceOfLife: 2 } },
-    { text: "Post-apocalyptic world", score: { dark: 3, action: 2 } },
-    { text: "Space universe", score: { sciFi: 3 } }
+    { text: "Future sci-fi city", score: { sciFi: 3 } },
+    { text: "Realistic school life", score: { sliceOfLife: 3 } },
+    { text: "War zone survival", score: { action: 3, dark: 2 } }
   ]
 },
 {
-  question: "Choose a setting",
+  question: "Favorite MC type?",
   answers: [
-    { text: "School life", score: { sliceOfLife: 2, comedy: 2 } },
-    { text: "War zone", score: { action: 3 } },
-    { text: "Mystery city", score: { mystery: 3 } },
-    { text: "Magical world", score: { fantasy: 3 } }
-  ]
-},
-
-/* =========================
-   STORY STYLE
-========================= */
-
-{
-  question: "What pacing do you prefer?",
-  answers: [
-    { text: "Fast action-packed", score: { action: 3 } },
-    { text: "Slow emotional build", score: { emotional: 3 } },
-    { text: "Mind-heavy story", score: { mind: 3 } },
-    { text: "Light comedy flow", score: { comedy: 3 } }
+    { text: "Genius strategist", score: { mind: 3 } },
+    { text: "Overpowered hero", score: { action: 3 } },
+    { text: "Emotionally broken", score: { emotional: 3 } },
+    { text: "Funny idiot", score: { comedy: 3 } }
   ]
 },
 {
-  question: "Choose story focus",
+  question: "Choose power",
   answers: [
-    { text: "Plot twists", score: { mind: 3, thriller: 2 } },
-    { text: "Character emotions", score: { emotional: 3 } },
-    { text: "World building", score: { fantasy: 3 } },
-    { text: "Romance development", score: { romance: 3 } }
-  ]
-},
-
-/* =========================
-   EMOTIONAL STYLE
-========================= */
-
-{
-  question: "What kind of ending do you prefer?",
-  answers: [
-    { text: "Happy ending", score: { wholesome: 3 } },
-    { text: "Sad emotional ending", score: { emotional: 3 } },
-    { text: "Twist ending", score: { mind: 3, thriller: 2 } },
-    { text: "Open ending", score: { mystery: 3 } }
-  ]
-},
-{
-  question: "What hits you the most?",
-  answers: [
-    { text: "Character death", score: { dark: 3, emotional: 2 } },
-    { text: "Love story", score: { romance: 3 } },
-    { text: "Battle scenes", score: { action: 3 } },
-    { text: "Comedy moments", score: { comedy: 3 } }
-  ]
-},
-
-/* =========================
-   EXTRA TASTE DEPTH
-========================= */
-
-{
-  question: "Pick your power",
-  answers: [
-    { text: "Super strength", score: { action: 3 } },
     { text: "Time control", score: { mind: 3, sciFi: 2 } },
-    { text: "Magic powers", score: { fantasy: 3 } },
-    { text: "Charisma", score: { romance: 3 } }
+    { text: "Magic", score: { fantasy: 3 } },
+    { text: "Super strength", score: { action: 3 } },
+    { text: "Mind reading", score: { psychological: 3 } }
   ]
 },
 {
-  question: "Pick a companion",
+  question: "Pick setting",
+  answers: [
+    { text: "School", score: { sliceOfLife: 3 } },
+    { text: "Space", score: { sciFi: 3 } },
+    { text: "Medieval world", score: { fantasy: 3 } },
+    { text: "Modern city", score: { sliceOfLife: 2 } }
+  ]
+},
+{
+  question: "What pacing?",
+  answers: [
+    { text: "Fast action", score: { action: 3 } },
+    { text: "Slow emotional", score: { emotional: 3 } },
+    { text: "Mind-heavy", score: { mind: 3 } },
+    { text: "Comedy flow", score: { comedy: 3 } }
+  ]
+},
+{
+  question: "What hits you hardest?",
+  answers: [
+    { text: "Character death", score: { emotional: 3, dark: 2 } },
+    { text: "Love story", score: { romance: 3 } },
+    { text: "Plot twist", score: { thriller: 3 } },
+    { text: "Funny moments", score: { comedy: 3 } }
+  ]
+},
+{
+  question: "Pick companion",
   answers: [
     { text: "Loyal friend", score: { wholesome: 3 } },
     { text: "Rival genius", score: { mind: 3 } },
     { text: "Cute partner", score: { romance: 3 } },
-    { text: "Funny sidekick", score: { comedy: 3 } }
+    { text: "Chaos sidekick", score: { comedy: 3 } }
   ]
 },
-
-/* =========================
-   MORE STORY ENERGY
-========================= */
-
+{
+  question: "Danger level?",
+  answers: [
+    { text: "Very high", score: { dark: 3, action: 2 } },
+    { text: "Moderate", score: { adventure: 3 } },
+    { text: "Safe cozy", score: { wholesome: 3 } },
+    { text: "Mental danger only", score: { psychological: 3 } }
+  ]
+},
 {
   question: "What keeps you watching?",
   answers: [
     { text: "Cliffhangers", score: { thriller: 3 } },
-    { text: "Emotional moments", score: { emotional: 3 } },
-    { text: "Fight scenes", score: { action: 3 } },
+    { text: "Emotions", score: { emotional: 3 } },
+    { text: "Fights", score: { action: 3 } },
     { text: "Cute scenes", score: { wholesome: 3 } }
   ]
 },
 {
-  question: "Choose danger level",
+  question: "Favorite theme?",
   answers: [
-    { text: "Very high danger", score: { dark: 3, action: 2 } },
-    { text: "Moderate adventure", score: { adventure: 3 } },
-    { text: "Safe and cozy", score: { wholesome: 3 } },
-    { text: "Mind danger only", score: { mind: 3 } }
-  ]
-},
-
-/* =========================
-   FINAL STYLE QUESTIONS
-========================= */
-
-{
-  question: "Pick your dream anime genre",
-  answers: [
-    { text: "Action fantasy", score: { action: 2, fantasy: 2 } },
-    { text: "Romantic drama", score: { romance: 3, drama: 2 } },
-    { text: "Psychological thriller", score: { mind: 3, thriller: 2 } },
-    { text: "Comedy slice of life", score: { comedy: 3, sliceOfLife: 2 } }
+    { text: "Revenge", score: { dark: 3 } },
+    { text: "Friendship", score: { wholesome: 3 } },
+    { text: "Love", score: { romance: 3 } },
+    { text: "Survival", score: { thriller: 3 } }
   ]
 },
 {
-  question: "What energy do you prefer?",
-  answers: [
-    { text: "Intense and serious", score: { dark: 3 } },
-    { text: "Relaxed and funny", score: { comedy: 3 } },
-    { text: "Emotional and deep", score: { emotional: 3 } },
-    { text: "Magical and fantasy", score: { fantasy: 3 } }
-  ]
-},
-
-/* =========================
-   BONUS QUESTIONS (VARIETY)
-========================= */
-
-{
-  question: "Pick a fear you enjoy watching",
+  question: "Pick fear",
   answers: [
     { text: "Losing loved ones", score: { emotional: 3 } },
-    { text: "Mind games", score: { mind: 3 } },
+    { text: "Mind control", score: { psychological: 3 } },
     { text: "Monsters", score: { horror: 3 } },
-    { text: "Nothing scary", score: { wholesome: 3 } }
+    { text: "Nothing", score: { wholesome: 3 } }
   ]
 },
 {
-  question: "What anime style do you like?",
+  question: "Animation style?",
   answers: [
-    { text: "Old school classics", score: { nostalgia: 1 } },
-    { text: "Modern animation", score: { action: 2 } },
-    { text: "Dark artistic style", score: { dark: 3 } },
-    { text: "Cute anime style", score: { wholesome: 3 } }
+    { text: "Old school", score: { nostalgia: 3 } },
+    { text: "Modern clean", score: { action: 2 } },
+    { text: "Dark art", score: { dark: 3 } },
+    { text: "Cute style", score: { wholesome: 3 } }
+  ]
+},
+{
+  question: "Dream anime genre?",
+  answers: [
+    { text: "Action fantasy", score: { action: 2, fantasy: 2 } },
+    { text: "Romance drama", score: { romance: 3, drama: 2 } },
+    { text: "Psychological thriller", score: { mind: 3, thriller: 2 } },
+    { text: "Comedy slice", score: { comedy: 3, sliceOfLife: 2 } }
   ]
 }
-
 ];
 
 /* =========================
-   RANDOM 20 QUESTIONS
+   GENERATE 20 UNIQUE QUESTIONS
 ========================= */
 
 let questions = [];
 
 function generateQuestions() {
+  let pool = [...questionPool];
   questions = [];
-  for (let i = 0; i < 20; i++) {
-    const rand = questionPool[Math.floor(Math.random() * questionPool.length)];
-    questions.push(rand);
+
+  for (let i = 0; i < 20 && pool.length > 0; i++) {
+    const idx = Math.floor(Math.random() * pool.length);
+    questions.push(pool.splice(idx, 1)[0]);
   }
 }
 
@@ -284,14 +210,13 @@ function generateQuestions() {
 function showQuestion() {
   const q = questions[currentQuestion];
 
-  question.innerText = q.question;
-  answers.innerHTML = "";
+  questionEl.innerText = q.question;
+  answersEl.innerHTML = "";
 
-  progress.style.width =
-    ((currentQuestion + 1) / questions.length) * 100 + "%";
-
-  progressText.innerText =
-    `Question ${currentQuestion + 1} / ${questions.length}`;
+  if (questions.length > 0) {
+    progress.style.width = ((currentQuestion + 1) / questions.length) * 100 + "%";
+    progressText.innerText = `Question ${currentQuestion + 1} / ${questions.length}`;
+  }
 
   q.answers.forEach(ans => {
     const btn = document.createElement("button");
@@ -299,8 +224,10 @@ function showQuestion() {
     btn.innerText = ans.text;
 
     btn.onclick = () => {
+      answersEl.querySelectorAll("button").forEach(b => b.disabled = true);
+
       for (let k in ans.score) {
-        taste[k] += ans.score[k];
+        taste[k] = (taste[k] || 0) + ans.score[k];
       }
 
       currentQuestion++;
@@ -312,7 +239,7 @@ function showQuestion() {
       }
     };
 
-    answers.appendChild(btn);
+    answersEl.appendChild(btn);
   });
 }
 
@@ -321,140 +248,140 @@ function showQuestion() {
 ========================= */
 
 function personalityName() {
-  const max = Math.max(...Object.values(taste));
+  let top = "";
+  let max = -Infinity;
 
-  if (max === taste.action) return "⚔️ Battle Seeker";
-  if (max === taste.mind) return "🧠 Genius Thinker";
-  if (max === taste.romance) return "❤️ Emotional Lover";
-  if (max === taste.comedy) return "😂 Chaos Enjoyer";
-  if (max === taste.fantasy) return "✨ Fantasy Dreamer";
-  return "🌌 Deep Observer";
+  for (let k in taste) {
+    if (taste[k] > max) {
+      max = taste[k];
+      top = k;
+    }
+  }
+
+  const map = {
+    action: "⚔️ Battle Seeker",
+    mind: "🧠 Genius Thinker",
+    romance: "❤️ Emotional Lover",
+    comedy: "😂 Chaos Enjoyer",
+    fantasy: "✨ Fantasy Dreamer",
+    psychological: "🧩 Deep Analyst"
+  };
+
+  return map[top] || "🌌 Deep Observer";
 }
 
 /* =========================
-   API FETCH (MULTI PAGE)
+   API (FIXED + RETRY + CACHE)
 ========================= */
 
-async function fetchAnime(query, page = 1) {
-  try {
-    const url = `https://api.jikan.moe/v4/anime?q=${query}&page=${page}&limit=10`;
-    const res = await fetch(url);
-    const data = await res.json();
-    return data.data || [];
-  } catch {
-    return [];
+const cache = new Map();
+
+async function fetchAnime(query, page = 1, retries = 3) {
+  const key = `${query}-${page}`;
+  if (cache.has(key)) return cache.get(key);
+
+  const url = `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}&page=${page}&limit=10`;
+
+  for (let i = 0; i < retries; i++) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("API error");
+
+      const data = await res.json();
+      const result = data.data || [];
+
+      cache.set(key, result);
+      return result;
+
+    } catch (e) {
+      await new Promise(r => setTimeout(r, 800 * (i + 1)));
+    }
   }
+
+  return [];
 }
 
 /* =========================
-   BUILD SMART QUERIES
+   QUERY BUILDER
 ========================= */
 
 function buildQueries(t) {
   let q = [];
 
-  if (t.action > 5) q.push("action battle");
-  if (t.mind > 5) q.push("psychological thriller");
-  if (t.romance > 5) q.push("romance drama");
-  if (t.fantasy > 5) q.push("fantasy magic");
-  if (t.sciFi > 5) q.push("sci-fi future");
-  if (t.horror > 5) q.push("horror dark");
-  if (t.mystery > 5) q.push("mystery detective");
+  if (t.action > 5) q.push("action");
+  if (t.mind > 5) q.push("psychological");
+  if (t.romance > 5) q.push("romance");
+  if (t.fantasy > 5) q.push("fantasy");
+  if (t.sciFi > 5) q.push("sci-fi");
+  if (t.horror > 5) q.push("horror");
+  if (t.mystery > 5) q.push("mystery");
 
-  if (q.length === 0) q = ["top anime", "popular anime"];
-
-  return q;
+  return q.length ? q : ["top anime"];
 }
 
 /* =========================
-   AI-STYLE SCORING
+   SCORING
 ========================= */
 
 function calculateScore(anime, t) {
   let score = 0;
+  let g = (anime.genres || []).map(x => x.name.toLowerCase());
 
-  let g = anime.genres.map(x => x.name.toLowerCase());
-
-  const map = {
-    action: ["action"],
-    comedy: ["comedy"],
-    romance: ["romance"],
-    fantasy: ["fantasy"],
-    adventure: ["adventure"],
-    sciFi: ["sci-fi"],
-    horror: ["horror"],
-    drama: ["drama"],
-    sliceOfLife: ["slice of life"],
-    psychological: ["psychological"],
-    mystery: ["mystery"],
-    thriller: ["thriller"]
-  };
-
-  for (let key in map) {
-    map[key].forEach(tag => {
-      if (g.includes(tag)) score += t[key] * 1.2; // weighted boost
-    });
+  for (let key in t) {
+    if (g.includes(key.toLowerCase())) {
+      score += t[key] * 1.2;
+    }
   }
 
+  if (g.includes("psychological")) score += t.mind * 1.5;
   if (g.includes("dark")) score += t.dark * 1.5;
-  if (g.includes("psychological")) score += t.psychological * 1.5;
 
   return score;
 }
 
 /* =========================
-   WHY MATCH EXPLANATION
+   EXPLANATION
 ========================= */
 
 function explain(anime, t) {
-  let g = anime.genres.map(x => x.name.toLowerCase());
+  let g = (anime.genres || []).map(x => x.name.toLowerCase());
   let reasons = [];
 
-  if (g.includes("action") && t.action > 3)
-    reasons.push("high action preference");
+  if (g.includes("action") && t.action > 3) reasons.push("action match");
+  if (g.includes("romance") && t.romance > 3) reasons.push("romance match");
+  if (g.includes("psychological") && t.mind > 3) reasons.push("mind match");
+  if (g.includes("fantasy") && t.fantasy > 3) reasons.push("fantasy match");
 
-  if (g.includes("romance") && t.romance > 3)
-    reasons.push("romance match");
-
-  if (g.includes("psychological") && t.mind > 3)
-    reasons.push("mind games preference");
-
-  if (g.includes("fantasy") && t.fantasy > 3)
-    reasons.push("fantasy interest");
-
-  return reasons.join(", ") || "general taste match";
+  return reasons.join(", ") || "general match";
 }
 
 /* =========================
-   MAIN ENGINE
+   RECOMMEND ENGINE
 ========================= */
 
 async function recommendAnime() {
   const container = document.getElementById("recommendations");
-  container.innerHTML = "Analyzing deep anime DNA... 🧠";
+  container.innerHTML = "Analyzing anime DNA...";
 
   let queries = buildQueries(taste);
 
   let all = [];
 
   for (let q of queries) {
-    let page1 = await fetchAnime(q, 1);
-    let page2 = await fetchAnime(q, 2);
-    all = all.concat(page1, page2);
+    all.push(...await fetchAnime(q, 1));
+    all.push(...await fetchAnime(q, 2));
   }
 
-  let unique = {};
-  all.forEach(a => (unique[a.mal_id] = a));
+  const unique = {};
+  all.forEach(a => unique[a.mal_id] = a);
 
-  let ranked = Object.values(unique).map(a => {
-    return {
-      title: a.title,
-      image: a.images?.jpg?.image_url,
-      description: a.synopsis?.substring(0, 120) || "",
-      score: calculateScore(a, taste),
-      why: explain(a, taste)
-    };
-  });
+  const ranked = Object.values(unique).map(a => ({
+    title: a.title,
+    image: a.images?.jpg?.image_url,
+    description: a.synopsis?.slice(0, 120) || "",
+    score: calculateScore(a, taste),
+    why: explain(a, taste)
+  }));
 
   ranked.sort((a, b) => b.score - a.score);
 
@@ -473,13 +400,11 @@ function showResults(list) {
     const div = document.createElement("div");
     div.className = "animeCard";
 
-    let percent = Math.min(100, Math.floor(a.score * 10));
-
     div.innerHTML = `
       <img src="${a.image}" style="width:100%;border-radius:10px;">
       <h3>${a.title}</h3>
       <p>${a.description}</p>
-      <p><strong>Match: ${percent}%</strong></p>
+      <p><strong>Match: ${Math.min(100, Math.floor(a.score * 10))}%</strong></p>
       <p style="font-size:12px;color:gray;">Why: ${a.why}</p>
     `;
 
@@ -492,11 +417,10 @@ function showResults(list) {
 ========================= */
 
 function showResult() {
-  quiz.classList.add("hidden");
-  result.classList.remove("hidden");
+  quizEl.classList.add("hidden");
+  resultEl.classList.remove("hidden");
 
-  document.getElementById("personality").innerText =
-    personalityName();
+  document.getElementById("personality").innerText = personalityName();
 
   recommendAnime();
 }
@@ -508,10 +432,10 @@ function showResult() {
 document.getElementById("restartButton").onclick = () => {
   currentQuestion = 0;
 
-  Object.keys(taste).forEach(k => (taste[k] = 0));
+  for (let k in taste) taste[k] = 0;
 
-  result.classList.add("hidden");
-  quiz.classList.remove("hidden");
+  resultEl.classList.add("hidden");
+  quizEl.classList.remove("hidden");
 
   generateQuestions();
   showQuestion();
