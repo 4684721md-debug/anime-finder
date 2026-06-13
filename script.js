@@ -19,7 +19,8 @@ let taste = {
   wholesome: 0,
   sliceOfLife: 0,
   horror: 0,
-  adventure: 0
+  adventure: 0,
+  nostalgia: 0
 };
 /* =========================
    DOM
