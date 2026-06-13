@@ -4,82 +4,14 @@
 
 let currentQuestion = 0;
 
-/* =========================
-   EXTENDED TASTE SYSTEM (22+ GENRES)
-========================= */
-
 let taste = {
-  Action: 0,
-comedy: 0,
-romance: 0,
-mind: 0,
-fantasy: 0,
-adventure: 0,
-sciFi: 0,
-horror: 0,
-drama: 0,
-emotional: 0,
-sliceOfLife: 0,
-dark: 0,
-wholesome: 0,
-psychological: 0,
-mystery: 0,
-thriller: 0,
-sports: 0,
-mecha: 0,
-isekai: 0,
-historical: 0,
-music: 0,
-supernatural: 0,
-nostalgia: 0,
-suspense: 0,
-satire: 0,
-parody: 0,
-tragedy: 0,
-melodrama: 0,
-noir: 0,
-surrealism: 0,
-experimental: 0,
-existential: 0,
-philosophical: 0,
-cynical: 0,
-optimistic: 0,
-dystopian: 0,
-postApocalyptic: 0,
-cyberpunk: 0,
-steampunk: 0,
-spaceOpera: 0,
-urbanFantasy: 0,
-highFantasy: 0,
-mythological: 0,
-alternativeHistory: 0,
-contemporary: 0,
-rural: 0,
-academic: 0,
-comingOfAge: 0,
-foundFamily: 0,
-slowBurn: 0,
-ensembleCast: 0,
-revenge: 0,
-heist: 0,
-survival: 0,
-political: 0,
-biographical: 0,
-workplace: 0,
-travelogue: 0,
-martialArts: 0,
-cybernetic: 0,
-superhero: 0,
-vampire: 0,
-zombie: 0,
-detective: 0,
-courtroom: 0,
-medical: 0,
-culinary: 0,
-gaming: 0,
-military: 0
+  intensity: 0,
+  emotion: 0,
+  mind: 0,
+  comedy: 0,
+  fantasy: 0,
+  realism: 0
 };
-
 /* =========================
    DOM
 ========================= */
@@ -549,15 +481,16 @@ function showQuestion() {
 ========================= */
 
 function personalityName() {
-  let top = "";
-  let max = -Infinity;
+  let t = taste;
 
-  for (let k in taste) {
-    if (taste[k] > max) {
-      max = taste[k];
-      top = k;
-    }
-  }
+  if (t.intensity > 10) return "⚔️ Battle Junkie";
+  if (t.mind > 10) return "🧠 Deep Thinker";
+  if (t.emotion > 10) return "💔 Emotional Soul";
+  if (t.comedy > 10) return "😂 Chaos Lover";
+  if (t.fantasy > 10) return "✨ Dream Explorer";
+
+  return "🌌 Balanced Watcher";
+}
 
   const map = {
     action: "⚔️ Battle Seeker",
@@ -577,31 +510,37 @@ function personalityName() {
 
 const cache = new Map();
 
-async function fetchAnime(query, page = 1, retries = 3) {
-  const key = `${query}-${page}`;
-  if (cache.has(key)) return cache.get(key);
+async function fetchAnime(query) {
+  const res = await fetch("https://graphql.anilist.co", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      query: `
+        query ($search: String) {
+          Page(perPage: 10) {
+            media(search: $search, type: ANIME) {
+              title {
+                romaji
+              }
+              description
+              genres
+              averageScore
+              coverImage {
+                large
+              }
+            }
+          }
+        }
+      `,
+      variables: { search: query }
+    })
+  });
 
-  const url = `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}&page=${page}&limit=10`;
-
-  for (let i = 0; i < retries; i++) {
-    try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error("API error");
-
-      const data = await res.json();
-      const result = data.data || [];
-
-      cache.set(key, result);
-      return result;
-
-    } catch (e) {
-      await new Promise(r => setTimeout(r, 800 * (i + 1)));
-    }
-  }
-
-  return [];
+  const data = await res.json();
+  return data.data.Page.media;
 }
-
 /* =========================
    QUERY BUILDER
 ========================= */
@@ -626,16 +565,17 @@ function buildQueries(t) {
 
 function calculateScore(anime, t) {
   let score = 0;
-  let g = (anime.genres || []).map(x => x.name.toLowerCase());
 
-  for (let key in t) {
-    if (g.includes(key.toLowerCase())) {
-      score += t[key] * 1.2;
-    }
-  }
+  const genres = (anime.genres || []).map(g => g.name.toLowerCase());
+  const rating = anime.score || 0;
 
-  if (g.includes("psychological")) score += t.mind * 1.5;
-  if (g.includes("dark")) score += t.dark * 1.5;
+  if (genres.includes("action")) score += t.intensity * 2;
+  if (genres.includes("romance")) score += t.emotion * 2;
+  if (genres.includes("psychological")) score += t.mind * 2;
+  if (genres.includes("comedy")) score += t.comedy * 2;
+  if (genres.includes("fantasy")) score += t.fantasy * 2;
+
+  score += rating / 10;
 
   return score;
 }
@@ -662,33 +602,28 @@ function explain(anime, t) {
 
 async function recommendAnime() {
   const container = document.getElementById("recommendations");
-  container.innerHTML = "Analyzing anime DNA...";
+  container.innerHTML = "Finding anime for your taste...";
 
-  let queries = buildQueries(taste);
+  const queries = ["action", "romance", "psychological", "fantasy", "comedy"];
 
   let all = [];
 
   for (let q of queries) {
-    all.push(...await fetchAnime(q, 1));
-    all.push(...await fetchAnime(q, 2));
+    const result = await fetchAnime(q);
+    all.push(...result);
   }
 
-  const unique = {};
-  all.forEach(a => unique[a.mal_id] = a);
-
-  const ranked = Object.values(unique).map(a => ({
-    title: a.title,
-    image: a.images?.jpg?.image_url,
-    description: a.synopsis?.slice(0, 120) || "",
-    score: calculateScore(a, taste),
-    why: explain(a, taste)
+  const ranked = all.map(a => ({
+    title: a.title.romaji,
+    image: a.coverImage.large,
+    description: a.description?.slice(0, 120) || "",
+    score: calculateScore(a, taste)
   }));
 
   ranked.sort((a, b) => b.score - a.score);
 
   showResults(ranked.slice(0, 10));
 }
-
 /* =========================
    SHOW RESULTS
 ========================= */
