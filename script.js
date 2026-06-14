@@ -566,14 +566,20 @@ async function fetchAnime(genre) {
 function buildQueries(t) {
   let q = [];
 
-  if (t.action > 5) q.push("Action");
-  if (t.mind > 5) q.push("Psychological");
-  if (t.romance > 5) q.push("Romance");
-  if (t.fantasy > 5) q.push("Fantasy");
-  if (t.sciFi > 5) q.push("Sci-Fi");
-  if (t.horror > 5) q.push("Horror");
-  if (t.mystery > 5) q.push("Mystery");
+  const mapping = {
+  action: "Action",
+  romance: "Romance",
+  fantasy: "Fantasy",
+  sciFi: "Sci-Fi",
+  mystery: "Mystery",
+  horror: "Horror",
+  comedy: "Comedy",
+  adventure: "Adventure"
+};
 
+for (const [trait, genre] of Object.entries(mapping)) {
+  if (t[trait] > 5) q.push(genre);
+}
   return q.length ? q : ["Action"];
 }
 
