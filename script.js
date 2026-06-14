@@ -628,7 +628,17 @@ async function recommendAnime() {
   }
 
   const unique = [...new Map(
-  all.map(a => [a.title.romaji, a])
+  all.map(a => {
+
+    let baseTitle = a.title.romaji
+      .replace(/season\s*\d+/gi, "")
+      .replace(/final season/gi, "")
+      .replace(/part\s*\d+/gi, "")
+      .replace(/movie/gi, "")
+      .trim();
+
+    return [baseTitle, a];
+  })
 ).values()];
 
 const ranked = unique.map(a => ({
