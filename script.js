@@ -442,7 +442,11 @@ function generateQuestions() {
 
   for (let i = 0; i < 20 && pool.length > 0; i++) {
     const idx = Math.floor(Math.random() * pool.length);
-    questions.push(pool.splice(idx, 1)[0]);
+   const question = pool.splice(idx, 1)[0];
+
+question.answers.sort(() => Math.random() - 0.5);
+
+questions.push(question);
   }
 }
 
@@ -526,7 +530,7 @@ async function fetchAnime(genre) {
     body: JSON.stringify({
       query: `
         query ($genre: String) {
-          Page(perPage: 20) {
+          Page(perPage: 50) {
             media(
               type: ANIME
               genre: $genre
@@ -602,10 +606,16 @@ function calculateScore(anime, t) {
   if (genres.includes("sci-fi")) score += (t.sciFi || 0) * 2;
   if (genres.includes("horror")) score += (t.horror || 0) * 2;
   if (genres.includes("mystery")) score += (t.mystery || 0) * 2;
+if (genres.includes("slice of life"))
+  score += (t.sliceOfLife || 0) * 2;
+if (genres.includes("drama"))
+  score += (t.emotional || 0) * 2;
+if (genres.includes("psychological"))
+  score += (t.psychological || 0) * 2;
+  
+   score += rating / 5;
 
-  score += rating / 10;
-
-  return score;
+   return score;
 }
 
 /* =========================
